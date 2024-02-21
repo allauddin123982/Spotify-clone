@@ -1,0 +1,224 @@
+* {
+  margin: 0;
+  padding: 0;
+}
+body {
+  background-color: black;
+  color: white;
+}
+.container {
+  display: flex;
+  gap: 8px;
+  padding: 8px;
+  
+}
+
+.left {
+  /* border: 1px solid blue; */
+  width: 23vw;
+}
+.home {
+  padding: 20px;
+  border-radius: 8px;
+}
+.bg-black {
+  background-color: #121212;
+  color: white;
+}
+
+ul > li {
+  width: 25px;
+  list-style: none;
+  display: flex;
+  align-items: center;
+  gap: 22px;
+  padding-top: 18px;
+  font-size: 16px;
+  font-weight: bold;
+  letter-spacing: 1px;
+}
+ul > li:nth-child(2){
+  color: rgb(154, 145, 145);
+}
+
+.invert {
+  filter: invert(1);
+}
+
+.libIcon {
+  width: 25px;
+}
+.lib {
+  margin-top: 10px;
+  padding: 10px;
+  border-radius: 8px;
+  min-height: 74vh;
+  position: relative;
+}
+
+.libHeader {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  padding: 10px;
+  font-size: 22px;
+}
+
+.footer {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  padding: 30px;
+  position: absolute;
+  bottom: 0;
+}
+
+.footer a {
+  font-size: 0.8rem;
+  text-decoration: none;
+  color: gray;
+}
+
+.right {
+  /* border: 1px solid red; */
+  width: 77vw;
+}
+.right__main {
+    background-color: #121212;
+    min-height: 98vh;
+    border-radius: 8px;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background-color: rgba(0, 0, 0, 0.5);
+  padding: 10px;
+}
+
+.nav {
+  display: flex;
+  gap: 10px;
+}
+
+.nav img {
+  width: 20px;
+}
+
+.map {
+  background-color: black;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 7px;
+  border-radius: 50%;
+  text-align: center;
+}
+
+.buttons {
+  margin-right: 20px;
+}
+
+#signUp {
+  border: 0px;
+  background-color: rgb(0, 0, 0, 0);
+  width: 120px;
+  padding: 15px;
+  color: gray;
+  font-weight: bold;
+  font-size: 16px;
+}
+
+#login {
+  border: 0px;
+  background-color: aliceblue;
+  width: 100px;
+  padding: 15px;
+  border-radius: 30px;
+  font-weight: bold;
+  font-size: 16px;
+}
+.playLists__section{
+    margin: 15px;
+  }
+  .playList__heading {
+    font-weight: bold;
+    font-size: 24px;
+  }
+
+  .playLists__main{
+    display: flex;
+    flex-wrap: wrap;
+    overflow-y: scroll;
+    max-height: 80vh;
+}
+
+.playLists__card{
+    /* border:1px solid red; */
+    margin-top: 15px;
+    margin-left: 15px;
+    border-radius: 10px;
+    width: 180px;
+    padding: 15px;
+    background-color: #060606;
+    position: relative;
+    
+}
+
+.playLists__card:hover{
+    background-color: rgba(40,40,40,255);
+    transition: 0.4s ease;
+}
+
+.playLists__card svg{
+    display: none;
+}
+
+.playLists__card:hover svg{
+    display: block;
+}
+
+.playList__thumbnail{
+    border-radius: 10px;
+    width: 180px;
+    height: 200px;
+    object-fit: cover;
+}
+.playButton{
+    position: absolute;
+    bottom: 58px;
+    right: 18px;
+}
+.desc{
+    padding-top: 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    font-size: 14px;
+    
+}
+.desc p {
+  color: gray;
+}
+
+/* width */
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: #333; /* You can adjust this color to fit your dark theme */
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  /* border-radius: 60px; */
+  background: #555; /* You can adjust this color to fit your dark theme */
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #777; /* You can adjust this color to fit your dark theme */
+} /* You can adjust these colors to fit your dark theme */
