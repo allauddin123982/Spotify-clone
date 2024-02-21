@@ -10,7 +10,6 @@ body {
   display: flex;
   gap: 8px;
   padding: 8px;
-  
 }
 
 .left {
@@ -37,7 +36,7 @@ ul > li {
   font-weight: bold;
   letter-spacing: 1px;
 }
-ul > li:nth-child(2){
+ul > li:nth-child(2) {
   color: rgb(154, 145, 145);
 }
 
@@ -84,9 +83,11 @@ ul > li:nth-child(2){
   width: 77vw;
 }
 .right__main {
-    background-color: #121212;
-    min-height: 98vh;
-    border-radius: 8px;
+  /* border: 1px solid red; */
+  background-color: #121212;
+  min-height: 97vh;
+  border-radius: 8px;
+  position: relative;
 }
 
 .header {
@@ -139,68 +140,98 @@ ul > li:nth-child(2){
   font-weight: bold;
   font-size: 16px;
 }
-.playLists__section{
-    margin: 15px;
-  }
-  .playList__heading {
-    font-weight: bold;
-    font-size: 24px;
-  }
-
-  .playLists__main{
-    display: flex;
-    flex-wrap: wrap;
-    overflow-y: scroll;
-    max-height: 80vh;
+.playLists__section {
+  margin: 15px;
+  /* border: 1px solid green; */
+  padding: 2px;
+ 
+}
+.playList__heading {
+  margin: 15px;
+  font-weight: bold;
+  font-size: 24px;
+  
 }
 
-.playLists__card{
-    /* border:1px solid red; */
-    margin-top: 15px;
-    margin-left: 15px;
-    border-radius: 10px;
-    width: 180px;
-    padding: 15px;
-    background-color: #060606;
-    position: relative;
-    
+.playLists__main {
+  /* border: 1px solid red; */
+  max-height: 70vh;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  overflow-y: scroll;
+  
 }
 
-.playLists__card:hover{
-    background-color: rgba(40,40,40,255);
-    transition: 0.4s ease;
+.playLists__card {
+  /* border:1px solid red; */
+  margin-top:5px;
+  margin-left: 5px;
+  border-radius: 10px;
+  width: 180px;
+  padding: 15px;
+  background-color: #060606;
+  position: relative;
 }
 
-.playLists__card svg{
-    display: none;
+.playLists__card:hover {
+  background-color: rgba(40, 40, 40, 255);
+  transition: 0.4s ease;
 }
 
-.playLists__card:hover svg{
-    display: block;
+.playLists__card svg {
+  display: none;
 }
 
-.playList__thumbnail{
-    border-radius: 10px;
-    width: 180px;
-    height: 200px;
-    object-fit: cover;
+.playLists__card:hover svg {
+  display: block;
 }
-.playButton{
-    position: absolute;
-    bottom: 58px;
-    right: 18px;
+
+.playList__thumbnail {
+  border-radius: 10px;
+  width: 180px;
+  height: 200px;
+  object-fit: cover;
 }
-.desc{
-    padding-top: 10px;
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-    font-size: 14px;
-    
+.playButton {
+  position: absolute;
+  bottom: 58px;
+  right: 18px;
+}
+.desc {
+  padding-top: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  font-size: 14px;
 }
 .desc p {
   color: gray;
 }
+
+.playBar {
+  position: absolute;
+  bottom: 20px;
+  width: 72vw;
+  background-color: rgb(101, 194, 101);
+  padding: 16px;
+  color: black;
+  border-radius: 5px;
+
+}
+.songButtons{
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+}
+
+
+
+
+
+
+
+/* for scorll bar */
 
 /* width */
 ::-webkit-scrollbar {
