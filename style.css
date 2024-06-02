@@ -78,8 +78,8 @@ ul > li:nth-child(2) {
   margin-top: 16px;
   padding: 5px;
 }
-.libMain ol:hover{
-  background-color: rgba(105, 105, 105, .1);
+.libMain ol:hover {
+  background-color: rgba(105, 105, 105, 0.1);
   cursor: pointer;
   transition: 0.2s ease-in;
 }
@@ -88,10 +88,10 @@ ul > li:nth-child(2) {
   align-items: center;
   gap: 20px;
 }
-.descSong h3{
+.descSong h3 {
   font-size: 16px;
 }
-.descSong p{
+.descSong p {
   padding-top: 6px;
   color: rgb(162, 161, 161);
 }
@@ -229,22 +229,30 @@ ul > li:nth-child(2) {
   height: 200px;
   object-fit: cover;
 }
-.songInfo{
+.songInfo {
   display: flex;
   align-items: center;
   gap: 10px;
 }
-#progressBar{
-  width:100%;
+#progressBar {
+  width: 100%;
   cursor: pointer;
 }
-.playBtn{
+.playBtn {
+  display: inline;
+}
+
+.hideSidePlayBtn {
   display: none;
 }
-.PauseBtn{
+
+.sidePauseBtn {
   display: none;
 }
-.showBtn{
+.pauseBtn {
+  display: none;
+}
+.showBtn {
   display: block;
 }
 

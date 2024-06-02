@@ -1,10 +1,12 @@
 let songIndex = 0;
 
-let audioElement = new Audio("songs/1.mp3");
+let audioElement = new Audio();
 let masterPlay = document.getElementById("masterPlay");
+
 let masterPause = document.getElementById("masterPause");
 let progressBar = document.getElementById("progressBar");
 let songsList = document.getElementById("songsList");
+let sidePauseBtn = document.getElementsByClassName("sidePauseBtn");
 
 let songs = [
   {
@@ -59,21 +61,42 @@ let songs = [
   },
 ];
 
-//Handle play Pause
-masterPlay.addEventListener("click", () => {
+function playSideSong(index) {
+  if (audioElement.src !== songs[index].filePath) {
+    audioElement.src = songs[index].filePath; // Update the audio source if it's different
+    audioElement.load(); // Load the new audio source
+  }
+  if (audioElement.paused || audioElement.currentTime <= 0) {
+    audioElement.play();
+  } else {
+    audioElement = null;
+  }
+}
+function pauseSideSong() {
+  if (audioElement.currentTime > 0 && !audioElement.paused) {
+    audioElement.pause();
+  }
+}
+
+function playSongFunc() {
   if (audioElement.pause || audioElement.currentTime <= 0) {
     audioElement.play();
-    masterPlay.classList.add("playBtn");
-    masterPause.style.display = "block";
+    masterPlay.style.display = "none";
+    masterPause.style.display = "inline";
   }
-});
-masterPause.addEventListener("click", () => {
-  if (audioElement.play || audioElement.currentTime > 0) {
+}
+
+function pauseSongFunc() {
+  if (audioElement.currentTime > 0 && !audioElement.paused) {
     audioElement.pause();
+    masterPlay.style.display = "inline";
     masterPause.style.display = "none";
-    masterPlay.classList.remove("playBtn");
   }
-});
+}
+//Handle play Pause
+masterPlay.addEventListener("click", playSongFunc);
+
+masterPause.addEventListener("click", pauseSongFunc);
 
 audioElement.addEventListener("timeupdate", () => {
   progress = parseInt((audioElement.currentTime / audioElement.duration) * 100);
@@ -83,7 +106,6 @@ audioElement.addEventListener("timeupdate", () => {
 progressBar.addEventListener("change", () => {
   audioElement.currentTime = (progressBar.value * audioElement.duration) / 100;
 });
-
 
 let appendSongs = songs
   .map((s) => {
@@ -97,6 +119,7 @@ let appendSongs = songs
     </div>
     <div class="songPlayButton">
       <img src="play.svg" alt="" class="invert playSong">
+      <img src="pause.svg" alt="" class="invert sidePauseBtn"/>
     </div>
   </li>`;
   })
@@ -104,12 +127,40 @@ let appendSongs = songs
 
 songsList.innerHTML = appendSongs;
 
-let sidePauseBtn = document.getElementsByClassName('PauseBtn');
+let playButtons = document.querySelectorAll(".playSong");
+let pauseButtons = document.querySelectorAll(".sidePauseBtn");
 
-Array.from(document.getElementsByClassName('playSong')).forEach((element) => {
-    element.addEventListener('click', (e)=>{
-        e.target.classList.add("playBtn");
-        masterPause.classList.add("showBtn")
-    });
+playButtons.forEach((playButton, index) => {//index  = 1,  2
+  playButton.addEventListener("click", (e) => {
+      // Hide play button and show pause button for the clicked song
+      playButton.classList.add("hideSidePlayBtn");
+      pauseButtons[index].classList.remove("sidePauseBtn");//2 pause btn  will be displayed 
+
+      // Show play button for previously playing song (if any)
+      playButtons.forEach((pb, i) => {  // i == 0
+          if (i !== index) {// 0 !== 1 
+              pb.classList.remove("hideSidePlayBtn");
+              pauseButtons[i].classList.add("sidePauseBtn");
+          }
+      });
+
+      // Additional actions (if needed)
+      playSideSong(index); // Call play function
+      masterPlay.style.display = "none";
+      masterPause.style.display = "inline";
+  });
 });
 
+
+pauseButtons.forEach((pauseButton, index) => {
+  pauseButton.addEventListener("click", (e) => {
+    // Hide pause button and show play button
+    pauseButton.classList.add("sidePauseBtn");
+    playButtons[index].classList.remove("hideSidePlayBtn");
+
+    // Additional actions (if needed)
+    pauseSideSong(); // Call pause function
+    masterPlay.style.display = "inline";
+    masterPause.style.display = "none";
+  });
+});
