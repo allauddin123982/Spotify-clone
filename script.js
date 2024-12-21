@@ -1,8 +1,10 @@
 let songIndex = 0;
+// Authorization token that must have been created previously. See : https://developer.spotify.com/documentation/web-api/concepts/authorization
+const token =
+  "BQCWhyCJYVoYERjupnPojHSDfM71jP-I-imuNz75Yecz8gq-JadNXJxxCUzQ7fzR0eoszaKz33sifsrLWiVWCytpb0A9QdMbIbFfIoRGy9yicj6r4bxGBXj7Cg0qn_Zs-p0GWWRPERJmPn4cWvffYV9AHFLHKl3X7EaKjdmaTeMDmwLTJVJnU0x8ZBeACCyXVLCJc-arZFVz5H-RmRkKjxPP35nc3R6nf_2Zl82W2jOQN3h2bSAqPcgOUvdrDJGAojZ3p3aX0kp1r2i91BqhJaE48GH-XEXgws2I";
 
 let audioElement = new Audio();
 let masterPlay = document.getElementById("masterPlay");
-
 let masterPause = document.getElementById("masterPause");
 let progressBar = document.getElementById("progressBar");
 let songsList = document.getElementById("songsList");
@@ -78,6 +80,7 @@ function pauseSideSong() {
   }
 }
 
+//playing from master btn
 function playSongFunc() {
   if (audioElement.pause || audioElement.currentTime <= 0) {
     audioElement.play();
@@ -93,9 +96,9 @@ function pauseSongFunc() {
     masterPause.style.display = "none";
   }
 }
+
 //Handle play Pause
 masterPlay.addEventListener("click", playSongFunc);
-
 masterPause.addEventListener("click", pauseSongFunc);
 
 audioElement.addEventListener("timeupdate", () => {
@@ -127,30 +130,33 @@ let appendSongs = songs
 
 songsList.innerHTML = appendSongs;
 
+//left bar btns
 let playButtons = document.querySelectorAll(".playSong");
 let pauseButtons = document.querySelectorAll(".sidePauseBtn");
 
-playButtons.forEach((playButton, index) => {//index  = 1,  2
+playButtons.forEach((playButton, index) => {
+  //index  = 1,  2
   playButton.addEventListener("click", (e) => {
-      // Hide play button and show pause button for the clicked song
-      playButton.classList.add("hideSidePlayBtn");
-      pauseButtons[index].classList.remove("sidePauseBtn");//2 pause btn  will be displayed 
+    // Hide play button and show pause button for the clicked song
+    playButton.classList.add("hideSidePlayBtn");
+    pauseButtons[index].classList.remove("sidePauseBtn"); //2 pause btn  will be displayed
 
-      // Show play button for previously playing song (if any)
-      playButtons.forEach((pb, i) => {  // i == 0
-          if (i !== index) {// 0 !== 1 
-              pb.classList.remove("hideSidePlayBtn");
-              pauseButtons[i].classList.add("sidePauseBtn");
-          }
-      });
+    // Show play button for previously playing song (if any)
+    playButtons.forEach((pb, i) => {
+      // i == 0
+      if (i !== index) {
+        // 0 !== 1
+        pb.classList.remove("hideSidePlayBtn");
+        pauseButtons[i].classList.add("sidePauseBtn");
+      }
+    });
 
-      // Additional actions (if needed)
-      playSideSong(index); // Call play function
-      masterPlay.style.display = "none";
-      masterPause.style.display = "inline";
+    // Additional actions (if needed)
+    playSideSong(index); // Call play function
+    masterPlay.style.display = "none";
+    masterPause.style.display = "inline";
   });
 });
-
 
 pauseButtons.forEach((pauseButton, index) => {
   pauseButton.addEventListener("click", (e) => {
@@ -164,3 +170,111 @@ pauseButtons.forEach((pauseButton, index) => {
     masterPause.style.display = "none";
   });
 });
+
+async function fetchWebApi(endpoint, method, body) {
+  const res = await fetch(`https://api.spotify.com/${endpoint}`, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+    method,
+    body: JSON.stringify(body),
+  });
+  return await res.json();
+}
+
+
+
+async function getTopTracks() {
+  // Fetching the top tracks from the Spotify Web API
+  // Endpoint reference: https://developer.spotify.com/documentation/web-api/reference/get-users-top-artists-and-tracks
+  return (
+    await fetchWebApi("v1/me/top/tracks?time_range=long_term&limit=20", "GET")
+  ).items;
+}
+
+async function displayTopTracks() {
+  const topTracks = await getTopTracks(); // Fetch the top tracks
+  console.log(topTracks);
+
+  // Get the container where cards will be added (assuming a container exists)
+  const container = document.querySelector(".playLists__main"); // Replace with your actual container selector
+
+  // Ensure there's a valid container
+  if (container && topTracks?.length > 0) {
+    // Loop through the tracks and create a new card for each
+    for (let i = 0; i < topTracks.length; i++) {
+      const track = topTracks[i]; // Get the current track
+      const { name, artists, album } = track; // Destructure necessary details
+
+      const trackDescription = `${name} by ${artists
+        .map((artist) => artist.name)
+        .join(", ")}`;
+
+      // Create a new card element
+      const card = document.createElement("div");
+      card.classList.add("playLists__card");
+
+      // Add content to the card
+      card.innerHTML = `
+       <svg
+                  class="playButton"
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="34"
+                  height="34"
+                  viewBox="0 0 34 34"
+                  fill="none"
+                >
+                  <rect
+                    width="100%"
+                    height="100%"
+                    fill="#1ed760"
+                    rx="17"
+                    ry="17"
+                  />
+                  <g transform="translate(5, 5)">
+                    <!-- Apply 5px padding -->
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="24"
+                      height="24"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                    >
+                      <path
+                        d="M18.8906 12.846C18.5371 14.189 16.8667 15.138 13.5257 17.0361C10.296 18.8709 8.6812 19.7884 7.37983 19.4196C6.8418 19.2671 6.35159 18.9776 5.95624 18.5787C5 17.6139 5 15.7426 5 12C5 8.2574 5 6.3861 5.95624 5.42132C6.35159 5.02245 6.8418 4.73288 7.37983 4.58042C8.6812 4.21165 10.296 5.12907 13.5257 6.96393C16.8667 8.86197 18.5371 9.811 18.8906 11.154C19.0365 11.7084 19.0365 12.2916 18.8906 12.846Z"
+                        fill="black"
+                        stroke="black"
+                        stroke-width="1.0"
+                        stroke-linejoin="round"
+                      />
+                    </svg>
+                  </g>
+                </svg>
+       
+          ${
+            album && album.images[0]
+              ? `<img src="${album.images[0].url}" alt="${name}" class="playList__thumbnail">`
+              : ""
+          }
+       
+        <div class="desc">
+          <h4>${name}</h4>
+          <p>${trackDescription.substring(0,30)}</p>
+        </div>
+      `;
+
+      // Append the new card to the container
+      container.appendChild(card);
+    }
+  }
+}
+
+// Call the displayTopTracks function to populate the cards
+displayTopTracks();
+
+
+
+
+//right side btns
+let playButtons = document.querySelectorAll(".playSong");
+let pauseButtons = document.querySelectorAll(".sidePauseBtn");

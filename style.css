@@ -208,6 +208,7 @@ ul > li:nth-child(2) {
   padding: 15px;
   background-color: #060606;
   position: relative;
+  color: white;
 }
 
 .playLists__card:hover {
