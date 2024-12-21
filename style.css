@@ -5,6 +5,7 @@
 body {
   background-color: black;
   color: white;
+  overflow-y: hidden;
 }
 .container {
   display: flex;
@@ -124,7 +125,7 @@ ul > li:nth-child(2) {
 .right__main {
   /* border: 1px solid red; */
   background-color: #121212;
-  min-height: 97vh;
+  min-height: 98.5vh;
   border-radius: 8px;
   position: relative;
 }
@@ -259,7 +260,7 @@ ul > li:nth-child(2) {
 
 .playButton {
   position: absolute;
-  bottom: 58px;
+  bottom: 109px;
   right: 18px;
 }
 .desc {
@@ -275,8 +276,8 @@ ul > li:nth-child(2) {
 
 .playBar {
   position: absolute;
-  bottom: 20px;
-  width: 72vw;
+  bottom: 10px;
+  width: 70vw;
   background-color: rgb(101, 194, 101);
   padding: 16px;
   color: black;

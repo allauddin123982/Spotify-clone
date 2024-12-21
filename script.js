@@ -1,7 +1,6 @@
 let songIndex = 0;
 // Authorization token that must have been created previously. See : https://developer.spotify.com/documentation/web-api/concepts/authorization
-const token =
-  "BQCWhyCJYVoYERjupnPojHSDfM71jP-I-imuNz75Yecz8gq-JadNXJxxCUzQ7fzR0eoszaKz33sifsrLWiVWCytpb0A9QdMbIbFfIoRGy9yicj6r4bxGBXj7Cg0qn_Zs-p0GWWRPERJmPn4cWvffYV9AHFLHKl3X7EaKjdmaTeMDmwLTJVJnU0x8ZBeACCyXVLCJc-arZFVz5H-RmRkKjxPP35nc3R6nf_2Zl82W2jOQN3h2bSAqPcgOUvdrDJGAojZ3p3aX0kp1r2i91BqhJaE48GH-XEXgws2I";
+const token = 'BQBXl_cplHvKffWc6KsJHqrRWiMQ8fFMql8pjy5k6xpXP4iQXg1qOK1UeDYVSPVRpAjhZ0ASErWGUVwYEp_192GwJtDmVEiFg6DesihkbuaN3_qfOjzg9kjXkOmifTtBFul8AHebxRYdLRC2yvH0joRWcE3aMgQhCbLgc2f_A7eYRW_vPkMcEARs8DipqeqwLZmZ5JEq38L6X9-64X5bM0mEnOFtdS1U16BIYeO1dyiF11CjtDTHGXpjwaR_KxtnDkxy8BXh0cvak1MyyoRCJZ0bW3y6dO7nksEO';
 
 let audioElement = new Audio();
 let masterPlay = document.getElementById("masterPlay");
@@ -9,6 +8,12 @@ let masterPause = document.getElementById("masterPause");
 let progressBar = document.getElementById("progressBar");
 let songsList = document.getElementById("songsList");
 let sidePauseBtn = document.getElementsByClassName("sidePauseBtn");
+//left bar btns
+let playButtons = document.querySelectorAll(".playSong");
+let pauseButtons = document.querySelectorAll(".sidePauseBtn");
+var rightPlayButtons = [];
+var rightPauseButtons = [];
+
 
 let songs = [
   {
@@ -130,9 +135,6 @@ let appendSongs = songs
 
 songsList.innerHTML = appendSongs;
 
-//left bar btns
-let playButtons = document.querySelectorAll(".playSong");
-let pauseButtons = document.querySelectorAll(".sidePauseBtn");
 
 playButtons.forEach((playButton, index) => {
   //index  = 1,  2
@@ -180,6 +182,26 @@ async function fetchWebApi(endpoint, method, body) {
     body: JSON.stringify(body),
   });
   return await res.json();
+}
+
+
+// Function to play the song
+function playSong(url) {
+  if (!url) {
+    alert('No preview available for this track');
+    return;
+  }
+
+  const audio = new Audio(url);  // Create a new audio element
+  audio.play();  // Play the track
+  
+  // Optionally, you can add controls and events for the audio
+  audio.addEventListener('ended', () => {
+    console.log('Song has finished playing');
+  });
+
+  // Optional: Update UI or show a message when playing
+  console.log('Playing song:', url);
 }
 
 
@@ -265,6 +287,10 @@ async function displayTopTracks() {
 
       // Append the new card to the container
       container.appendChild(card);
+      const playButton = card.querySelector('.playButton');
+      playButton.addEventListener('click', () => playSong(preview_url));
+
+
     }
   }
 }
@@ -274,7 +300,38 @@ displayTopTracks();
 
 
 
-
 //right side btns
-let playButtons = document.querySelectorAll(".playSong");
-let pauseButtons = document.querySelectorAll(".sidePauseBtn");
+// setTimeout(()=> {
+//   rightPlayButtons= document.querySelectorAll(".playButton");
+//   rightPauseButtons = document.querySelectorAll(".sidePauseBtn");
+//   console.log("playButtonClicked", rightPlayButtons)
+  
+// }, 2000)
+
+
+
+// rightPlayButtons.forEach((playButton, index) => {
+  
+//   console.log("playButtonClicked", rightPlayButtons)
+//   //index  = 1,  2
+//   playButton.addEventListener("click", (e) => {
+//     // Hide play button and show pause button for the clicked song
+//     playButton.classList.add("hideSidePlayBtn");
+//     pauseButtons[index].classList.remove("sidePauseBtn"); //2 pause btn  will be displayed
+
+//     // Show play button for previously playing song (if any)
+//     playButtons.forEach((pb, i) => {
+//       // i == 0
+//       if (i !== index) {
+//         // 0 !== 1
+//         pb.classList.remove("hideSidePlayBtn");
+//         pauseButtons[i].classList.add("sidePauseBtn");
+//       }
+//     });
+
+//     // Additional actions (if needed)
+//     playSideSong(index); // Call play function
+//     masterPlay.style.display = "none";
+//     masterPause.style.display = "inline";
+//   });
+// });
